@@ -15,7 +15,6 @@ class ReflexAgent(Agent):
     """
 
     def get_action(self, game_state):
-        sadasdsad
         """
         You do not need to change this method, but you're welcome to.
 
