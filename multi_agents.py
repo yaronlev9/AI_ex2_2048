@@ -50,37 +50,29 @@ class ReflexAgent(Agent):
         board = successor_game_state.board
         max_tile = successor_game_state.max_tile
         score = successor_game_state.score
-        "*** YOUR CODE HERE ***"
-        vacant_spots_num = 1
-        num_of_equals = 1
-        multiplier = 1
-        second_to_max = 0
-        penalty = 1
-        checked = set()
-        penalized_set = set()
-        for row_index in range(len(board)):
-            for col_index in range(len(board[0])):
-                if second_to_max < board[row_index][col_index] < max_tile:
-                    second_to_max = board[row_index][col_index]
-                if board[row_index][col_index] == 0:
-                    vacant_spots_num += 1
+        counter = get_adjacencies(board)
+        new_board = down_matrix(board)
+        counter += get_adjacencies(new_board)
+        return max_tile + score + counter
+
+def get_adjacencies(board):
+    counter = 0
+    prev_num = None
+    for row in board:
+        for cell in row:
+            if (cell != 0 and prev_num == None):
+                prev_num = cell
+                continue
+            if cell != 0:
+                if cell == prev_num:
+                    counter += 1
+                    prev_num = None
                 else:
-                    if board[row_index][col_index] in checked:
-                        num_of_equals += 1
-                    else:
-                        checked.add(board[row_index][col_index])
-                    neighbors_of_cell = get_initialized_neighbors(board, row_index, col_index, penalized_set)
-                    for neighbor in neighbors_of_cell:
-                        penalized_set.add((row_index, col_index))
-                        penalty += abs(board[row_index][col_index] - neighbor)
-        if board[len(board) - 1][len(board[0]) - 1] == max_tile:
-            multiplier = 3
-        if len(board) > 1 and len(board[0]) > 1:
-            if board[len(board) - 1][len(board[0]) - 2] == second_to_max or board[len(board) - 2][len(board[0]) - 1]:
-                multiplier *= 2
-            if board[len(board) - 1][len(board[0]) - 2] == second_to_max and board[len(board) - 2][len(board[0]) - 1]:
-                multiplier *= 2
-        return (max_tile * multiplier * monotonous_evaluation(board) * vacant_spots_num + score) / penalty
+                    prev_num = cell
+        prev_num = None
+    return counter
+
+
 
 
 def down_matrix(matrix):
@@ -202,7 +194,7 @@ class MinmaxAgent(MultiAgentSearchAgent):
             Returns the successor game state after an agent takes an action
         """
         """*** YOUR CODE HERE ***"""
-        util.raiseNotDefined()
+        # util.raiseNotDefined()
 
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
