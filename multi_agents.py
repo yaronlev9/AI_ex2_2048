@@ -3,6 +3,7 @@ import abc
 import util
 from game import Agent, Action
 import copy
+import math
 
 
 class ReflexAgent(Agent):
@@ -55,6 +56,7 @@ class ReflexAgent(Agent):
         counter += get_adjacencies(new_board)
         return max_tile + score + counter
 
+
 def get_adjacencies(board):
     counter = 0
     prev_num = None
@@ -71,8 +73,6 @@ def get_adjacencies(board):
                     prev_num = cell
         prev_num = None
     return counter
-
-
 
 
 def down_matrix(matrix):
@@ -176,6 +176,24 @@ class MultiAgentSearchAgent(Agent):
 
 
 class MinmaxAgent(MultiAgentSearchAgent):
+    def mini_max(self, game_state, depth, current_agent):
+        current_state = game_state
+        actions = game_state.get_legal_actions(current_agent)
+        if depth == 0 or actions == []:
+            return self.evaluation_function(current_state), None
+        if current_agent == 0:  # if current is max player
+            value = - math.inf
+            for action in actions:
+                successor = current_state.generate_successor(current_agent, action)
+                value = max(value, (self.mini_max(successor, depth - 1, 1))[0])
+                return value, action
+        else:  # if current is min player
+            value = math.inf
+            for action in actions:
+                successor = current_state.generate_successor(current_agent, action)
+                value = min(value, (self.mini_max(successor, depth - 1, 0))[0])
+                return value, action
+
     def get_action(self, game_state):
         """
         Returns the minimax action from the current gameState using self.depth
@@ -194,7 +212,9 @@ class MinmaxAgent(MultiAgentSearchAgent):
             Returns the successor game state after an agent takes an action
         """
         """*** YOUR CODE HERE ***"""
-        # util.raiseNotDefined()
+        mini_max_result = self.mini_max(game_state, self.depth, 0)
+        print(mini_max_result[0])
+        return mini_max_result[1]
 
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
