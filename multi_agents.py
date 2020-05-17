@@ -217,7 +217,6 @@ class MinmaxAgent(MultiAgentSearchAgent):
             successor = game_state.generate_successor(0, action)
             lst.append([action, self.mini_max(successor, (self.depth * 2) - 1, 1)])
         lst.sort(key=lambda x: x[1])
-        print(lst[-1][1])
         return lst[-1][0]
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
@@ -261,7 +260,6 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             successor = game_state.generate_successor(0, action)
             lst.append((action, self.alpha_beta_pruning(((self.depth * 2) - 1), successor, -math.inf, math.inf, 1)))
         lst.sort(key=lambda x: x[1])
-        print(lst[-1][1])
         return lst[-1][0]
 
 
@@ -269,6 +267,28 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
     """
     Your expectimax agent (question 4)
     """
+
+    def expectimax(self, game_state, depth, current_agent):
+        current_state = game_state
+        actions = game_state.get_legal_actions(current_agent)
+        if depth == 0 or actions == []:
+            return self.evaluation_function(current_state)
+        if current_agent == 0:  # if current is max player
+            max_value = - math.inf
+            for action in actions:
+                successor = current_state.generate_successor(current_agent, action)
+                value = self.expectimax(successor, depth - 1, 1)
+                max_value = max(max_value, value)
+            return max_value
+        if current_agent == 1: # if current is min player
+                value = 0
+                for action in actions:
+                    successor = current_state.generate_successor(current_agent, action)
+                    value += self.expectimax(successor, depth - 1, 0)
+                value /= len(actions)
+                return value
+
+
 
     def get_action(self, game_state):
         """
@@ -278,7 +298,12 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         """*** YOUR CODE HERE ***"""
-        util.raiseNotDefined()
+        lst = []
+        for action in game_state.get_legal_actions(0):
+            successor = game_state.generate_successor(0, action)
+            lst.append((action, self.expectimax(successor,(self.depth * 2) - 1, 1)))
+        lst.sort(key=lambda x: x[1])
+        return lst[-1][0]
 
 
 def better_evaluation_function(current_game_state):
