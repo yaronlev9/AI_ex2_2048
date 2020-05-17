@@ -216,14 +216,9 @@ class MinmaxAgent(MultiAgentSearchAgent):
         for action in game_state.get_legal_actions(0):
             successor = game_state.generate_successor(0, action)
             lst.append([action, self.mini_max(successor, (self.depth * 2) - 1, 1)])
-        lst.sort(key=takeSecond)
+        lst.sort(key=lambda x: x[1])
         print(lst[-1][1])
         return lst[-1][0]
-
-
-def takeSecond(elem):
-    return elem[1]
-
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
@@ -236,23 +231,25 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         if depth == 0 or actions == []:
             return self.evaluation_function(current_state)
         if current_agent == 0:  # if current is max player
-            value = - math.inf
+            max_value = - math.inf
             for action in actions:
                 successor = current_state.generate_successor(current_agent, action)
-                value = max(value, (self.alpha_beta_pruning(depth - 1, successor, alpha, beta, 1)))
+                value = self.alpha_beta_pruning(depth - 1, successor, alpha, beta, 1)
+                max_value = max(max_value, value)
                 alpha = max(value, alpha)
                 if alpha >= beta:
                     break
-            return value
+            return max_value
         else:  # if current is min player
-            value = math.inf
+            min_value = math.inf
             for action in actions:
                 successor = current_state.generate_successor(current_agent, action)
-                value = min(value, (self.alpha_beta_pruning(depth - 1, successor, alpha, beta, 0)))
+                value = self.alpha_beta_pruning(depth - 1, successor, alpha, beta, 0)
+                min_value = min(min_value, value)
                 beta = min(beta, value)
                 if alpha >= beta:
                     break
-            return value
+            return min_value
 
     def get_action(self, game_state):
         """
@@ -262,8 +259,8 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         lst = []
         for action in game_state.get_legal_actions(0):
             successor = game_state.generate_successor(0, action)
-            lst.append([action, self.alpha_beta_pruning(((self.depth * 2) - 1), successor, -math.inf, math.inf, 1)])
-        lst.sort(key=takeSecond)
+            lst.append((action, self.alpha_beta_pruning(((self.depth * 2) - 1), successor, -math.inf, math.inf, 1)))
+        lst.sort(key=lambda x: x[1])
         print(lst[-1][1])
         return lst[-1][0]
 

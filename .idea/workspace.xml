@@ -20,49 +20,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fab6ca7-ccc2-4fb6-bbaa-4c02217e3367" name="Default Changelist" comment="implemented question 2, may need editing">
-      <change beforePath="$PROJECT_DIR$/.idea/ex2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ex2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ex2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2048.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2048.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/displays.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/2048.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/displays.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game2048_grid.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game_grid.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game_score.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game_state.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/graphicsDisplay.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/graphics_display.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/keyboard_agent.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/multi_agents.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/util.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game2048_grid.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_grid.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_state.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics_display.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboard_agent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/layouts/risk_layout.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/layouts/test_layout.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/multi_agents.py" beforeDir="false" afterPath="$PROJECT_DIR$/multi_agents.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multiagentProject.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util.py" beforeDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/venv/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-601878597">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="gitignore" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="PLAIN_TEXT" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="113" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="113" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/multi_agents.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3734">
+              <caret line="263" column="25" lean-forward="true" selection-start-line="263" selection-start-column="25" selection-end-line="263" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -80,6 +95,12 @@
         <option value="$PROJECT_DIR$/multi_agents.py" />
       </list>
     </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectId" id="1c1xoTlq9NY33Mw6ztvC7xASJoq" />
   <component name="ProjectLevelVcsManager">
@@ -115,7 +136,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
     <UpdatedFiles>
@@ -131,6 +152,8 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/ex2.iml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/misc.xml</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/multi_agents.py</PATH>
         </FILE-GROUP>
@@ -255,7 +278,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2048.py" />
-      <option name="PARAMETERS" value="--agent=MinmaxAgent --depth=3 --random_seed=1 --initial_board=test_layout.txt" />
+      <option name="PARAMETERS" value="--agent=AlphaBetaAgent --depth=3 --random_seed=1 --initial_board=test_layout.txt" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -294,18 +317,26 @@
       <option name="presentableId" value="LOCAL‎00002" />
       <updated>1589715753331</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="full solutions questions 1 and 2">
+      <created>1589731533429</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1589731533429</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13066386" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4992785" visible="true" weight="0.16491044" />
+      <window_info id="Structure" order="1" sideWeight="0.5007215" side_tool="true" visible="true" weight="0.16491044" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2483731" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2483731" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -346,7 +377,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added shit lines" />
     <MESSAGE value="implemented question 2, may need editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented question 2, may need editing" />
+    <MESSAGE value="full solutions questions 1 and 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="full solutions questions 1 and 2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589728605345">
@@ -390,20 +422,10 @@
     <SUITE FILE_PATH="coverage/AI_ex2_2048$2048.coverage" NAME="2048 Coverage Results" MODIFIED="1589728684849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/multi_agents.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="184" column="30" lean-forward="true" selection-start-line="184" selection-start-column="30" selection-end-line="184" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/2048.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -439,9 +461,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
           <caret line="15" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -449,8 +468,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-484">
           <caret line="11" column="41" lean-forward="true" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/multi_agents.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3734">
+          <caret line="263" column="25" lean-forward="true" selection-start-line="263" selection-start-column="25" selection-end-line="263" selection-end-column="25" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
