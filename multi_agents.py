@@ -2,6 +2,7 @@ import numpy as np
 import abc
 import util
 from game import Agent, Action
+import copy
 
 
 class ReflexAgent(Agent):
@@ -15,7 +16,6 @@ class ReflexAgent(Agent):
     """
 
     def get_action(self, game_state):
-        sadasdsad
         """
         You do not need to change this method, but you're welcome to.
 
@@ -45,16 +45,107 @@ class ReflexAgent(Agent):
         GameStates (GameState.py) and returns a number, where higher numbers are better.
 
         """
-
         # Useful information you can extract from a GameState (game_state.py)
-
         successor_game_state = current_game_state.generate_successor(action=action)
         board = successor_game_state.board
         max_tile = successor_game_state.max_tile
         score = successor_game_state.score
-
         "*** YOUR CODE HERE ***"
-        return score
+        vacant_spots_num = 1
+        num_of_equals = 1
+        multiplier = 1
+        second_to_max = 0
+        penalty = 1
+        checked = set()
+        penalized_set = set()
+        for row_index in range(len(board)):
+            for col_index in range(len(board[0])):
+                if second_to_max < board[row_index][col_index] < max_tile:
+                    second_to_max = board[row_index][col_index]
+                if board[row_index][col_index] == 0:
+                    vacant_spots_num += 1
+                else:
+                    if board[row_index][col_index] in checked:
+                        num_of_equals += 1
+                    else:
+                        checked.add(board[row_index][col_index])
+                    neighbors_of_cell = get_initialized_neighbors(board, row_index, col_index, penalized_set)
+                    for neighbor in neighbors_of_cell:
+                        penalized_set.add((row_index, col_index))
+                        penalty += abs(board[row_index][col_index] - neighbor)
+        if board[len(board) - 1][len(board[0]) - 1] == max_tile:
+            multiplier = 3
+        if len(board) > 1 and len(board[0]) > 1:
+            if board[len(board) - 1][len(board[0]) - 2] == second_to_max or board[len(board) - 2][len(board[0]) - 1]:
+                multiplier *= 2
+            if board[len(board) - 1][len(board[0]) - 2] == second_to_max and board[len(board) - 2][len(board[0]) - 1]:
+                multiplier *= 2
+        return (max_tile * multiplier * monotonous_evaluation(board) * vacant_spots_num + score) / penalty
+
+
+def down_matrix(matrix):
+    """this function receives a matrix (two dimensional list), and returns
+    it in the form of a two dimensional list, suited for words that
+    might appear in the downward direction"""
+    new_lst = []
+    for i in range(len(matrix[0])):
+        new_lst.append([])
+        for lst in matrix:
+            new_lst[i].append(lst[i])
+    return new_lst
+
+
+def get_diagonal(diagonal_matrix, matrix):
+    """this function receives a matrix and an empty list and returns a
+    two dimensional list suited for one direction of diagonals"""
+    new_matrix = diagonal_matrix
+    if len(matrix) == 0:
+        return new_matrix
+    else:
+        for amount_of_diagonals in range(len(matrix) + len(matrix[0]) - 1):
+            new_matrix.append([])
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                new_matrix[j + i].append(matrix[i][j])
+
+
+def up_right_diagonal(matrix):
+    """this function receives a matrix (two dimensional list), and returns
+    it in the form of a two dimensional list, suited for words that
+    might appear in the up right diagonal direction"""
+    new_matrix = copy.deepcopy(down_matrix(matrix))
+    diagonal_matrix = []
+    get_diagonal(diagonal_matrix, new_matrix)
+    return diagonal_matrix
+
+
+def monotonous_evaluation(board):
+    result = 1
+    diagonals_matrix = up_right_diagonal(copy.deepcopy(board))
+    diagonals_matrix.reverse()
+    last_min = diagonals_matrix[len(diagonals_matrix) - 1][0]
+    for lst in diagonals_matrix:
+        cur_min = last_min
+        for element in lst:
+            if element <= last_min:
+                result += 1
+            if element < cur_min:
+                cur_min = element
+        last_min = cur_min
+    return result
+
+
+def get_initialized_neighbors(board, row, col, penalized_set):
+    result = []
+    if col - 1 > 0 and board[row][col - 1] != 0 and (row, col - 1) not in penalized_set:
+        result.append(board[row][col - 1])
+    if row - 1 > 0 and board[row - 1][col] != 0 and (row - 1, col) not in penalized_set:
+        result.append(board[row - 1][col])
+    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] != 0 and (row, col + 1) not in penalized_set:
+        result.append(board[row][col + 1])
+    if row + 1 <= len(board) - 1 and board[row + 1][col] != 0 and (row + 1, col) not in penalized_set:
+        result.append(board[row + 1][col])
+    return result
 
 
 def score_evaluation_function(current_game_state):
@@ -114,7 +205,6 @@ class MinmaxAgent(MultiAgentSearchAgent):
         util.raiseNotDefined()
 
 
-
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
     Your minimax agent with alpha-beta pruning (question 3)
@@ -126,7 +216,6 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         """
         """*** YOUR CODE HERE ***"""
         util.raiseNotDefined()
-
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -143,9 +232,6 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         """
         """*** YOUR CODE HERE ***"""
         util.raiseNotDefined()
-
-
-
 
 
 def better_evaluation_function(current_game_state):
