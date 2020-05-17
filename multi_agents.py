@@ -215,25 +215,57 @@ class MinmaxAgent(MultiAgentSearchAgent):
         lst = []
         for action in game_state.get_legal_actions(0):
             successor = game_state.generate_successor(0, action)
-            lst.append([action, self.mini_max(successor, (self.depth * 2)-1, 1)])
+            lst.append([action, self.mini_max(successor, (self.depth * 2) - 1, 1)])
         lst.sort(key=takeSecond)
         print(lst[-1][1])
         return lst[-1][0]
 
+
 def takeSecond(elem):
     return elem[1]
+
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
     Your minimax agent with alpha-beta pruning (question 3)
     """
 
+    def alpha_beta_pruning(self, depth, game_state, alpha, beta, current_agent):
+        current_state = game_state
+        actions = game_state.get_legal_actions(current_agent)
+        if depth == 0 or actions == []:
+            return self.evaluation_function(current_state)
+        if current_agent == 0:  # if current is max player
+            value = - math.inf
+            for action in actions:
+                successor = current_state.generate_successor(current_agent, action)
+                value = max(value, (self.alpha_beta_pruning(depth - 1, successor, alpha, beta, 1)))
+                alpha = max(value, alpha)
+                if alpha >= beta:
+                    break
+            return value
+        else:  # if current is min player
+            value = math.inf
+            for action in actions:
+                successor = current_state.generate_successor(current_agent, action)
+                value = min(value, (self.alpha_beta_pruning(depth - 1, successor, alpha, beta, 0)))
+                beta = min(beta, value)
+                if alpha >= beta:
+                    break
+            return value
+
     def get_action(self, game_state):
         """
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         """*** YOUR CODE HERE ***"""
-        util.raiseNotDefined()
+        lst = []
+        for action in game_state.get_legal_actions(0):
+            successor = game_state.generate_successor(0, action)
+            lst.append([action, self.alpha_beta_pruning(((self.depth * 2) - 1), successor, -math.inf, math.inf, 1)])
+        lst.sort(key=takeSecond)
+        print(lst[-1][1])
+        return lst[-1][0]
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):

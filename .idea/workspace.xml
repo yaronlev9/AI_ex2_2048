@@ -19,7 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7fab6ca7-ccc2-4fb6-bbaa-4c02217e3367" name="Default Changelist" comment="implemented question 2, may need editing">
+    <list default="true" id="7fab6ca7-ccc2-4fb6-bbaa-4c02217e3367" name="Default Changelist" comment="improved implementation of question 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/multi_agents.py" beforeDir="false" afterPath="$PROJECT_DIR$/multi_agents.py" afterDir="false" />
     </list>
@@ -43,7 +43,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.2048">
     <configuration name="2048" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="ex2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -58,7 +58,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2048.py" />
-      <option name="PARAMETERS" value="--agent=MinmaxAgent --depth=3 --random_seed=1 --initial_board=test_layout.txt" />
+      <option name="PARAMETERS" value="--agent=AlphaBetaAgent --depth=1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -66,9 +66,36 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="multi_agents" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ex2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/multi_agents.py" />
+      <option name="PARAMETERS" value="--agent=AlphaBetaAgent --depth=2" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.2048" />
+      <item itemvalue="Python.multi_agents" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.2048" />
+        <item itemvalue="Python.multi_agents" />
       </list>
     </recent_temporary>
   </component>
@@ -82,7 +109,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1589541952639</updated>
-      <workItem from="1589710077059" duration="11638000" />
+      <workItem from="1589710077059" duration="14231000" />
     </task>
     <task id="LOCAL-00001" summary="added shit lines">
       <created>1589700448779</created>
@@ -97,7 +124,13 @@
       <option name="presentableId" value="LOCAL‎00002" />
       <updated>1589715753331</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL‎00003" summary="improved implementation of question 2">
+      <created>1589728886986</created>
+      <option name="number" value="LOCAL‎00003" />
+      <option name="presentableId" value="LOCAL‎00003" />
+      <updated>1589728886986</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,48 +150,61 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added shit lines" />
     <MESSAGE value="implemented question 2, may need editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented question 2, may need editing" />
+    <MESSAGE value="improved implementation of question 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved implementation of question 2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589728605345">
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589731699170">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1589728605345" />
-    <state width="1237" height="205" key="GridCell.Tab.0.bottom" timestamp="1589728585515">
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1589731699170" />
+    <state width="1237" height="204" key="GridCell.Tab.0.bottom" timestamp="1589731639978">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="205" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589728585515" />
-    <state width="1237" height="205" key="GridCell.Tab.0.center" timestamp="1589728585515">
+    <state width="1237" height="204" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589731639978" />
+    <state width="1237" height="204" key="GridCell.Tab.0.center" timestamp="1589731639978">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="205" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1589728585515" />
-    <state width="1237" height="205" key="GridCell.Tab.0.left" timestamp="1589728585515">
+    <state width="1237" height="204" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1589731639978" />
+    <state width="1237" height="204" key="GridCell.Tab.0.left" timestamp="1589731639978">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="205" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1589728585515" />
-    <state width="1237" height="205" key="GridCell.Tab.0.right" timestamp="1589728585515">
+    <state width="1237" height="204" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1589731639978" />
+    <state width="1237" height="204" key="GridCell.Tab.0.right" timestamp="1589731639978">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="205" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1589728585515" />
-    <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1589725349289">
+    <state width="1237" height="204" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1589731639978" />
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1589731639979">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589725349289" />
-    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1589725349289">
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589731639979" />
+    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1589731639979">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1589725349289" />
-    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1589725349288">
+    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1589731639979" />
+    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1589731639979">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1589725349288" />
-    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1589725349289">
+    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1589731639979" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1589731639979">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1589725349289" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1589731639979" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/multi_agents.py</url>
+          <line>264</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AI_ex2_2048$2048.coverage" NAME="2048 Coverage Results" MODIFIED="1589728684849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AI_ex2_2048$multi_agents.coverage" NAME="multi_agents Coverage Results" MODIFIED="1589731398046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AI_ex2_2048$2048.coverage" NAME="2048 Coverage Results" MODIFIED="1589731701421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="masterDetails">
     <states>
