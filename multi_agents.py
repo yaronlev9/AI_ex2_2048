@@ -180,19 +180,19 @@ class MinmaxAgent(MultiAgentSearchAgent):
         current_state = game_state
         actions = game_state.get_legal_actions(current_agent)
         if depth == 0 or actions == []:
-            return self.evaluation_function(current_state), None
+            return self.evaluation_function(current_state)
         if current_agent == 0:  # if current is max player
             value = - math.inf
             for action in actions:
                 successor = current_state.generate_successor(current_agent, action)
-                value = max(value, (self.mini_max(successor, depth - 1, 1))[0])
-                return value, action
+                value = max(value, (self.mini_max(successor, depth - 1, 1)))
+            return value
         else:  # if current is min player
             value = math.inf
             for action in actions:
                 successor = current_state.generate_successor(current_agent, action)
-                value = min(value, (self.mini_max(successor, depth - 1, 0))[0])
-                return value, action
+                value = min(value, (self.mini_max(successor, depth - 1, 0)))
+            return value
 
     def get_action(self, game_state):
         """
@@ -212,10 +212,16 @@ class MinmaxAgent(MultiAgentSearchAgent):
             Returns the successor game state after an agent takes an action
         """
         """*** YOUR CODE HERE ***"""
-        mini_max_result = self.mini_max(game_state, self.depth, 0)
-        print(mini_max_result[0])
-        return mini_max_result[1]
+        lst = []
+        for action in game_state.get_legal_actions(0):
+            successor = game_state.generate_successor(0, action)
+            lst.append([action, self.mini_max(successor, (self.depth * 2)-1, 1)])
+        lst.sort(key=takeSecond)
+        print(lst[-1][1])
+        return lst[-1][0]
 
+def takeSecond(elem):
+    return elem[1]
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
