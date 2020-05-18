@@ -127,16 +127,20 @@ def monotonous_evaluation(board):
     return result
 
 
-def get_initialized_neighbors(board, row, col, penalized_set):
-    result = []
-    if col - 1 > 0 and board[row][col - 1] != 0 and (row, col - 1) not in penalized_set:
-        result.append(board[row][col - 1])
-    if row - 1 > 0 and board[row - 1][col] != 0 and (row - 1, col) not in penalized_set:
-        result.append(board[row - 1][col])
-    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] != 0 and (row, col + 1) not in penalized_set:
-        result.append(board[row][col + 1])
-    if row + 1 <= len(board) - 1 and board[row + 1][col] != 0 and (row + 1, col) not in penalized_set:
-        result.append(board[row + 1][col])
+def get_penalty(board, row, col, penalized_set):
+    result = 0
+    if col - 1 > 0 and board[row][col - 1] != 0 and (row, col - 1) not in penalized_set and board[row][col] != \
+            board[row][col - 1]:
+        result += 1
+    if row - 1 > 0 and board[row - 1][col] != 0 and (row - 1, col) not in penalized_set and board[row][col] != \
+            board[row - 1][col]:
+        result += 1
+    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] != 0 and (row, col + 1) not in penalized_set and \
+            board[row][col] != board[row][col + 1]:
+        result += 1
+    if row + 1 <= len(board) - 1 and board[row + 1][col] != 0 and (row + 1, col) not in penalized_set and \
+            board[row][col] != board[row + 1][col]:
+        result += 1
     return result
 
 
@@ -219,6 +223,7 @@ class MinmaxAgent(MultiAgentSearchAgent):
         lst.sort(key=lambda x: x[1])
         return lst[-1][0]
 
+
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
     Your minimax agent with alpha-beta pruning (question 3)
@@ -280,15 +285,13 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
                 value = self.expectimax(successor, depth - 1, 1)
                 max_value = max(max_value, value)
             return max_value
-        if current_agent == 1: # if current is min player
-                value = 0
-                for action in actions:
-                    successor = current_state.generate_successor(current_agent, action)
-                    value += self.expectimax(successor, depth - 1, 0)
-                value /= len(actions)
-                return value
-
-
+        if current_agent == 1:  # if current is min player
+            value = 0
+            for action in actions:
+                successor = current_state.generate_successor(current_agent, action)
+                value += self.expectimax(successor, depth - 1, 0)
+            value /= len(actions)
+            return value
 
     def get_action(self, game_state):
         """
@@ -301,7 +304,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         lst = []
         for action in game_state.get_legal_actions(0):
             successor = game_state.generate_successor(0, action)
-            lst.append((action, self.expectimax(successor,(self.depth * 2) - 1, 1)))
+            lst.append((action, self.expectimax(successor, (self.depth * 2) - 1, 1)))
         lst.sort(key=lambda x: x[1])
         return lst[-1][0]
 
@@ -313,7 +316,37 @@ def better_evaluation_function(current_game_state):
     DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    board = current_game_state.board
+    max_tile = current_game_state.max_tile
+    score = current_game_state.score
+    counter = get_adjacencies(board)
+    new_board = down_matrix(board)
+    counter += get_adjacencies(new_board)
+    num_of_vacancies = 0
+    penalized_set = set()
+    penalty = 1
+    corner_multiplier = 1
+    second_max = 0
+    for row_index in range(len(board)):
+        for col_index in range(len(board[0])):
+            if board[row_index][col_index] == 0:
+                num_of_vacancies += 1
+            else:
+                penalty += get_penalty(board, row_index, col_index, penalized_set)
+                penalized_set.add((row_index, col_index))
+            if max_tile > board[row_index][col_index] > second_max:
+                second_max = board[row_index][col_index]
+    if board[len(board) - 1][len(board[0]) - 1] == max_tile:
+        corner_multiplier += 1
+    if len(board) > 1:
+        if board[len(board) - 2][len(board[0]) - 1] == second_max or board[len(board) - 2][
+            len(board[0]) - 1] == max_tile:
+            corner_multiplier += 1
+        if board[len(board) - 1][len(board[0]) - 2] == second_max or board[len(board) - 2][
+            len(board[0]) - 1] == max_tile:
+            corner_multiplier += 1
+    return max_tile + score + counter * 3 + monotonous_evaluation(board) * corner_multiplier + num_of_vacancies - \
+           penalty
 
 
 # Abbreviation
