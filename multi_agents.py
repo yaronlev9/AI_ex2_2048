@@ -58,11 +58,14 @@ class ReflexAgent(Agent):
 
 
 def get_adjacencies(board):
+    """
+    gets the number of all the foldable tiles on the board.
+    """
     counter = 0
     prev_num = None
     for row in board:
         for cell in row:
-            if (cell != 0 and prev_num == None):
+            if cell != 0 and prev_num is None:
                 prev_num = cell
                 continue
             if cell != 0:
@@ -76,7 +79,7 @@ def get_adjacencies(board):
 
 
 def down_matrix(matrix):
-    """this function receives a matrix (two dimensional list), and returns
+    """receives a matrix (two dimensional list), and returns
     it in the form of a two dimensional list, suited for words that
     might appear in the downward direction"""
     new_lst = []
@@ -88,7 +91,7 @@ def down_matrix(matrix):
 
 
 def get_diagonal(diagonal_matrix, matrix):
-    """this function receives a matrix and an empty list and returns a
+    """receives a matrix and an empty list and returns a
     two dimensional list suited for one direction of diagonals"""
     new_matrix = diagonal_matrix
     if len(matrix) == 0:
@@ -102,7 +105,7 @@ def get_diagonal(diagonal_matrix, matrix):
 
 
 def up_right_diagonal(matrix):
-    """this function receives a matrix (two dimensional list), and returns
+    """receives a matrix (two dimensional list), and returns
     it in the form of a two dimensional list, suited for words that
     might appear in the up right diagonal direction"""
     new_matrix = copy.deepcopy(down_matrix(matrix))
@@ -112,6 +115,11 @@ def up_right_diagonal(matrix):
 
 
 def monotonous_evaluation(board):
+    """
+    gets an evaluation of how monotonous is the board, considering the down right
+    corner to be the highest value, and the diagonals adjacent to it as lower values
+    in monotonous manner.
+    """
     result = 1
     diagonals_matrix = up_right_diagonal(copy.deepcopy(board))
     diagonals_matrix.reverse()
@@ -128,6 +136,10 @@ def monotonous_evaluation(board):
 
 
 def get_penalty(board, row, col, penalized_set):
+    """
+    gets an evaluation of the penalty to set upon a board state, by checking how many neighbor tiles are on
+    the board that cannot be folded.
+    """
     result = 0
     if col - 1 > 0 and board[row][col - 1] != 0 and (row, col - 1) not in penalized_set and board[row][col] != \
             board[row][col - 1]:
@@ -180,7 +192,15 @@ class MultiAgentSearchAgent(Agent):
 
 
 class MinmaxAgent(MultiAgentSearchAgent):
+
     def mini_max(self, game_state, depth, current_agent):
+        """
+        an implementation of the minimax algorithm.
+        :param game_state: the beginning state of he game.
+        :param depth: the maximum depth of the game tree.
+        :param current_agent: 1 for max player, and 0 for min player.
+        :return: the value of the state.
+        """
         current_state = game_state
         actions = game_state.get_legal_actions(current_agent)
         if depth == 0 or actions == []:
@@ -230,6 +250,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
     """
 
     def alpha_beta_pruning(self, depth, game_state, alpha, beta, current_agent):
+        """
+        an implementation of alpha-beta pruning algorithm.
+        """
         current_state = game_state
         actions = game_state.get_legal_actions(current_agent)
         if depth == 0 or actions == []:
@@ -274,6 +297,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
     """
 
     def expectimax(self, game_state, depth, current_agent):
+        """an implementation of the expectimax algorithm"""
         current_state = game_state
         actions = game_state.get_legal_actions(current_agent)
         if depth == 0 or actions == []:
@@ -345,7 +369,7 @@ def better_evaluation_function(current_game_state):
         if board[len(board) - 1][len(board[0]) - 2] == second_max or board[len(board) - 2][
             len(board[0]) - 1] == max_tile:
             corner_multiplier += 1
-    return max_tile + score + counter * 3 + monotonous_evaluation(board) * corner_multiplier + num_of_vacancies - \
+    return max_tile*2 + score + counter * 5 + monotonous_evaluation(board)*2 + corner_multiplier*10 + num_of_vacancies - \
            penalty
 
 
