@@ -351,6 +351,11 @@ def better_evaluation_function(current_game_state):
     penalty = 1
     corner_multiplier = 1
     second_max = 0
+    sum_lu_corners = 4 * (board[0][0]) + (board[0][1] + board[1][0]) + 0.5 * (board[1][1])
+    sum_rd_corners = 3 * (board[3][3]) + 2 * (board[2][3] + board[3][2]) + 0.5 * (board[2][2])
+    sum_ru_corners = 3 * (board[0][3]) + 2 * (board[0][2] + board[1][3]) + 0.5 * (board[1][2])
+    sum_ld_corners = 3 * (board[3][0]) + 2 * (board[2][0] + board[3][1]) + 0.5 * (board[2][1])
+    sum_corners = max(sum_ld_corners, sum_lu_corners, sum_rd_corners, sum_ru_corners)
     for row_index in range(len(board)):
         for col_index in range(len(board[0])):
             if board[row_index][col_index] == 0:
@@ -369,8 +374,7 @@ def better_evaluation_function(current_game_state):
         if board[len(board) - 1][len(board[0]) - 2] == second_max or board[len(board) - 2][
             len(board[0]) - 1] == max_tile:
             corner_multiplier += 1
-    return max_tile*2 + score + counter * 5 + monotonous_evaluation(board)*2 + corner_multiplier*10 + num_of_vacancies - \
-           penalty
+    return max_tile + score + counter * 5 + sum_corners + num_of_vacancies - penalty
 
 
 # Abbreviation
