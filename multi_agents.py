@@ -255,11 +255,11 @@ def better_evaluation_function(current_game_state):
     sum_ru_corners = 3 * (board[0][3]) + 2 * (board[0][2] + board[1][3])
     sum_ld_corners = 3 * (board[3][0]) + 2 * (board[2][0] + board[3][1])
     sum_corners = max(sum_ld_corners, sum_lu_corners, sum_rd_corners, sum_ru_corners)
-    if max_tile >= 256 and (board[0][0] == max_tile or board[0][3] == max_tile or board[3][0] == max_tile or
+    if max_tile >= 128 and (board[0][0] == max_tile or board[0][3] == max_tile or board[3][0] == max_tile or
         board[3][3] == max_tile):
         pointer = max_tile
         lst = find_max_tiles(board, pointer)
-        while pointer != 32:
+        while pointer != 16:
             for cell in lst:
                 counter += find_max_tile_adgecancies(board, cell[0], cell[1], pointer)
             pointer = pointer//2
