@@ -255,11 +255,11 @@ def better_evaluation_function(current_game_state):
     sum_ru_corners = 3 * (board[0][3]) + 2 * (board[0][2] + board[1][3])
     sum_ld_corners = 3 * (board[3][0]) + 2 * (board[2][0] + board[3][1])
     sum_corners = max(sum_ld_corners, sum_lu_corners, sum_rd_corners, sum_ru_corners)
-    if max_tile >= 128 and (board[0][0] == max_tile or board[0][3] == max_tile or board[3][0] == max_tile or
+    if max_tile >= 64 and (board[0][0] == max_tile or board[0][3] == max_tile or board[3][0] == max_tile or
         board[3][3] == max_tile):
         pointer = max_tile
         lst = find_max_tiles(board, pointer)
-        while pointer != 16:
+        while pointer != 4:
             for cell in lst:
                 counter += find_max_tile_adgecancies(board, cell[0], cell[1], pointer)
             pointer = pointer//2
@@ -327,6 +327,9 @@ def get_penalty(board, row, col, penalized_set):
     return result
 
 def find_max_tile_adgecancies(board, row, col, value):
+    """
+    Counts when 2 tiles with the same value are adjacent or if one tile is equal to half its adjacent tile.
+    """
     counter = 0
     if row-1 >= 0 and board[row-1][col] == value:
         counter += 2
@@ -347,6 +350,9 @@ def find_max_tile_adgecancies(board, row, col, value):
     return counter
 
 def next_best_tile(board, tile):
+    """
+    Finds the next tile with the second largest value.
+    """
     if tile == 1:
         return 0
     for row in board:
@@ -356,6 +362,9 @@ def next_best_tile(board, tile):
     return next_best_tile(board, tile//2)
 
 def find_max_tiles(board, max_tile):
+    """
+    returns a list of all the tiles with the value of the max_tile it receives.
+    """
     lst = []
     for row in range(len(board)):
         for col in range(len(board[0])):
