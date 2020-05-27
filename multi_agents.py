@@ -57,89 +57,6 @@ class ReflexAgent(Agent):
         return max_tile + score + counter
 
 
-def get_adjacencies(board):
-    counter = 0
-    prev_num = None
-    for row in board:
-        for cell in row:
-            if (cell != 0 and prev_num == None):
-                prev_num = cell
-                continue
-            if cell != 0:
-                if cell == prev_num:
-                    counter += 1
-                    prev_num = None
-                else:
-                    prev_num = cell
-        prev_num = None
-    return counter
-
-
-def down_matrix(matrix):
-    """this function receives a matrix (two dimensional list), and returns
-    it in the form of a two dimensional list, suited for words that
-    might appear in the downward direction"""
-    new_lst = []
-    for i in range(len(matrix[0])):
-        new_lst.append([])
-        for lst in matrix:
-            new_lst[i].append(lst[i])
-    return new_lst
-
-
-def get_diagonal(diagonal_matrix, matrix):
-    """this function receives a matrix and an empty list and returns a
-    two dimensional list suited for one direction of diagonals"""
-    new_matrix = diagonal_matrix
-    if len(matrix) == 0:
-        return new_matrix
-    else:
-        for amount_of_diagonals in range(len(matrix) + len(matrix[0]) - 1):
-            new_matrix.append([])
-        for i in range(len(matrix)):
-            for j in range(len(matrix[0])):
-                new_matrix[j + i].append(matrix[i][j])
-
-
-def up_right_diagonal(matrix):
-    """this function receives a matrix (two dimensional list), and returns
-    it in the form of a two dimensional list, suited for words that
-    might appear in the up right diagonal direction"""
-    new_matrix = copy.deepcopy(down_matrix(matrix))
-    diagonal_matrix = []
-    get_diagonal(diagonal_matrix, new_matrix)
-    return diagonal_matrix
-
-
-def monotonous_evaluation(board):
-    result = 1
-    diagonals_matrix = up_right_diagonal(copy.deepcopy(board))
-    diagonals_matrix.reverse()
-    last_min = diagonals_matrix[len(diagonals_matrix) - 1][0]
-    for lst in diagonals_matrix:
-        cur_min = last_min
-        for element in lst:
-            if element <= last_min:
-                result += 1
-            if element < cur_min:
-                cur_min = element
-        last_min = cur_min
-    return result
-
-
-def get_initialized_neighbors(board, row, col, penalized_set):
-    result = []
-    if col - 1 > 0 and board[row][col - 1] != 0 and (row, col - 1) not in penalized_set:
-        result.append(board[row][col - 1])
-    if row - 1 > 0 and board[row - 1][col] != 0 and (row - 1, col) not in penalized_set:
-        result.append(board[row - 1][col])
-    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] != 0 and (row, col + 1) not in penalized_set:
-        result.append(board[row][col + 1])
-    if row + 1 <= len(board) - 1 and board[row + 1][col] != 0 and (row + 1, col) not in penalized_set:
-        result.append(board[row + 1][col])
-    return result
-
-
 def score_evaluation_function(current_game_state):
     """
     This default evaluation function just returns the score of the state.
@@ -176,7 +93,15 @@ class MultiAgentSearchAgent(Agent):
 
 
 class MinmaxAgent(MultiAgentSearchAgent):
+
     def mini_max(self, game_state, depth, current_agent):
+        """
+        an implementation of the minimax algorithm.
+        :param game_state: the beginning state of he game.
+        :param depth: the maximum depth of the game tree.
+        :param current_agent: 1 for max player, and 0 for min player.
+        :return: the value of the state.
+        """
         current_state = game_state
         actions = game_state.get_legal_actions(current_agent)
         if depth == 0 or actions == []:
@@ -219,12 +144,16 @@ class MinmaxAgent(MultiAgentSearchAgent):
         lst.sort(key=lambda x: x[1])
         return lst[-1][0]
 
+
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
     Your minimax agent with alpha-beta pruning (question 3)
     """
 
     def alpha_beta_pruning(self, depth, game_state, alpha, beta, current_agent):
+        """
+        an implementation of alpha-beta pruning algorithm.
+        """
         current_state = game_state
         actions = game_state.get_legal_actions(current_agent)
         if depth == 0 or actions == []:
@@ -269,6 +198,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
     """
 
     def expectimax(self, game_state, depth, current_agent):
+        """an implementation of the expectimax algorithm"""
         current_state = game_state
         actions = game_state.get_legal_actions(current_agent)
         if depth == 0 or actions == []:
@@ -280,15 +210,13 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
                 value = self.expectimax(successor, depth - 1, 1)
                 max_value = max(max_value, value)
             return max_value
-        if current_agent == 1: # if current is min player
-                value = 0
-                for action in actions:
-                    successor = current_state.generate_successor(current_agent, action)
-                    value += self.expectimax(successor, depth - 1, 0)
-                value //= len(actions)
-                return value
-
-
+        if current_agent == 1:  # if current is min player
+            value = 0
+            for action in actions:
+                successor = current_state.generate_successor(current_agent, action)
+                value += self.expectimax(successor, depth - 1, 0)
+            value /= len(actions)
+            return value
 
     def get_action(self, game_state):
         """
@@ -301,7 +229,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         lst = []
         for action in game_state.get_legal_actions(0):
             successor = game_state.generate_successor(0, action)
-            lst.append((action, self.expectimax(successor,(self.depth * 2) - 1, 1)))
+            lst.append((action, self.expectimax(successor, (self.depth * 2) - 1, 1)))
         lst.sort(key=lambda x: x[1])
         return lst[-1][0]
 
@@ -314,45 +242,126 @@ def better_evaluation_function(current_game_state):
     """
     "*** YOUR CODE HERE ***"
     board = current_game_state.board
-    sum_lu_corners = 4*(board[0][0]) + (board[0][1] + board[1][0]) + 0.5 * (board[1][1])
     max_tile = current_game_state.max_tile
     score = current_game_state.score
     counter = get_adjacencies(board)
     new_board = down_matrix(board)
     counter += get_adjacencies(new_board)
-    empty_cells = find_empty(board)
-    penalty = find_monotonity(board)
-    penalty += find_monotonity(new_board)
-    return (sum_lu_corners + empty_cells*4)*max_tile - penalty*4
+    num_of_vacancies = 0
+    penalized_set = set()
+    penalty = 1
+    sum_lu_corners = 4 * (board[0][0]) + (board[0][1] + board[1][0])
+    sum_rd_corners = 3 * (board[3][3]) + 2 * (board[2][3] + board[3][2])
+    sum_ru_corners = 3 * (board[0][3]) + 2 * (board[0][2] + board[1][3])
+    sum_ld_corners = 3 * (board[3][0]) + 2 * (board[2][0] + board[3][1])
+    sum_corners = max(sum_ld_corners, sum_lu_corners, sum_rd_corners, sum_ru_corners)
+    if max_tile >= 256 and (board[0][0] == max_tile or board[0][3] == max_tile or board[3][0] == max_tile or
+        board[3][3] == max_tile):
+        pointer = max_tile
+        lst = find_max_tiles(board, pointer)
+        while pointer != 32:
+            for cell in lst:
+                counter += find_max_tile_adgecancies(board, cell[0], cell[1], pointer)
+            pointer = pointer//2
+            lst = find_max_tiles(board, pointer)
+            counter += 1
+    for row_index in range(len(board)):
+        for col_index in range(len(board[0])):
+            if board[row_index][col_index] == 0:
+                num_of_vacancies += 1
+            else:
+                penalty += get_penalty(board, row_index, col_index, penalized_set)
+                penalized_set.add((row_index, col_index))
+    return max_tile + score + counter * 5 + sum_corners + num_of_vacancies - penalty
 
-def find_empty(board):
+def get_adjacencies(board):
+    """
+    gets the number of all the foldable tiles on the board.
+    """
     counter = 0
+    prev_num = None
     for row in board:
         for cell in row:
-            if cell == 0:
-                counter += 1
+            if cell != 0 and prev_num is None:
+                prev_num = cell
+                continue
+            if cell != 0:
+                if cell == prev_num:
+                    counter += 1
+                    prev_num = None
+                else:
+                    prev_num = cell
+        prev_num = None
     return counter
 
-def find_monotonity(board):
+
+def down_matrix(matrix):
+    """receives a matrix (two dimensional list), and returns
+    it in the form of a two dimensional list, suited for words that
+    might appear in the downward direction"""
+    new_lst = []
+    for i in range(len(matrix[0])):
+        new_lst.append([])
+        for lst in matrix:
+            new_lst[i].append(lst[i])
+    return new_lst
+
+def get_penalty(board, row, col, penalized_set):
+    """
+    gets an evaluation of the penalty to set upon a board state, by checking how many neighbor tiles are on
+    the board that cannot be folded.
+    """
+    result = 0
+    if col - 1 > 0 and board[row][col - 1] != 0 and (row, col - 1) not in penalized_set and board[row][col] != \
+            board[row][col - 1]:
+        result += 1
+    if row - 1 > 0 and board[row - 1][col] != 0 and (row - 1, col) not in penalized_set and board[row][col] != \
+            board[row - 1][col]:
+        result += 1
+    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] != 0 and (row, col + 1) not in penalized_set and \
+            board[row][col] != board[row][col + 1]:
+        result += 1
+    if row + 1 <= len(board) - 1 and board[row + 1][col] != 0 and (row + 1, col) not in penalized_set and \
+            board[row][col] != board[row + 1][col]:
+        result += 1
+    return result
+
+def find_max_tile_adgecancies(board, row, col, value):
     counter = 0
-    for row in board:
-        for i in range(len(row)-1):
-            if row[i] > row[i+1] and (row[i] - row[i+1]>8):
-                counter += 1
-            if row[i] > row[i+1] and (row[i] - row[i+1]>16):
-                counter += 1
-            if row[i] > row[i+1] and (row[i] - row[i+1]>32):
-                counter += 1
-            if row[i] > row[i+1] and (row[i] - row[i+1]>64):
-                counter += 1
-            if row[i] > row[i + 1] and (row[i] - row[i + 1] > 128):
-                counter += 1
-            if row[i] > row[i + 1] and (row[i] - row[i + 1] > 256):
-                counter += 1
-            if row[i] > row[i + 1] and (row[i] - row[i + 1] > 512):
-                counter += 1
+    if row-1 >= 0 and board[row-1][col] == value:
+        counter += 2
+    if row-1 >= 0 and board[row-1][col] == next_best_tile(board, value):
+        counter += 1
+    if row+1 <= 3 and board[row+1][col] == value:
+        counter += 2
+    if row+1 <= 3 and board[row+1][col] == next_best_tile(board, value):
+        counter += 1
+    if col-1 >= 0 and board[row][col-1] == value:
+        counter += 2
+    if col-1 >= 0 and board[row][col-1] == next_best_tile(board, value):
+        counter += 1
+    if col+1 <= 3 and board[row][col+1] == value:
+        counter += 2
+    if col+1 <= 3 and board[row][col+1] == next_best_tile(board, value):
+        counter += 1
     return counter
 
+def next_best_tile(board, tile):
+    if tile == 1:
+        return 0
+    for row in board:
+        for cell in row:
+            if cell == tile//2:
+                return tile//2
+    return next_best_tile(board, tile//2)
+
+def find_max_tiles(board, max_tile):
+    lst = []
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            if board[row][col] == max_tile:
+                lst.append((row, col))
+    return lst
 
 # Abbreviation
 better = better_evaluation_function
